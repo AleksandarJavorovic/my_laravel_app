@@ -26,4 +26,27 @@ class AuthController extends Controller
         // Redirect
         return redirect()->route('home');
     }
+
+    // Login User
+    public function login(Request $request)
+    {
+        // Validate
+        $fields = $request->validate([
+            'email'    => ['required', 'email', 'max:255'],
+            'password' => ['required'],
+        ]);
+
+        // dd($request);
+
+        // Try to Login
+        if (Auth::attempt($fields, $request->remember)) {
+            // Redirect
+            // return redirect()->route('home');
+            // Redirect to intended page
+            return redirect()->intended();
+        } else {
+            // Redirect Back with Error
+            return back()->withErrors(['failed' => 'E-Mail or Password incorrect'])->withInput();
+        }
+    }
 }
