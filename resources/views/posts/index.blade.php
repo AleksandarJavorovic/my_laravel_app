@@ -8,7 +8,7 @@
 
 				{{-- Author and Date --}}
 				<div>
-					<span class="text-xs font-light mb-4">{{ $post->created_at->diffforHumans() }}</span>
+					<span class="text-xs font-light mb-4">{{ $post->created_at->diffforHumans() }} by</span>
 					<a href="" class="text-blue-500 font-medium">Username</a>
 				</div>
 
@@ -18,8 +18,9 @@
 
 				</div>
 			</div>
-			
 		@endforeach
 	</div>
+
+	<div>{{ $posts->links() }}</div>
 
 </x-layout>
