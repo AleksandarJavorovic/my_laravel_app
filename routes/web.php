@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Postcontroller;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -12,7 +13,9 @@ use Illuminate\Support\Facades\Route;
 //     return view('auth.register');
 // })->name('register');
 
-Route::view('/', 'posts.index')->name('home'); // Shorter syntax for simple routes
+Route::redirect('/', 'posts');
+
+Route::resource('posts', Postcontroller::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
