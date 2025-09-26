@@ -24,7 +24,7 @@ class AuthController extends Controller
         Auth::login($user);
 
         // Redirect
-        return redirect()->route('home');
+        return redirect()->route('posts.index');
     }
 
     // Login User
@@ -61,6 +61,6 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         // Redirect to home page after logout
-        return redirect()->route('home');
+        return redirect()->route('posts.index');
     }
 }
