@@ -1,9 +1,7 @@
 <x-layout>
     <h1 class="title">Hello {{ auth()->user()->username }}</h1>
+    <h2 class="font-bold mb-4">Create a new post</h2>
     <div class="card mb-4">
-        <h2 class="font-bold mb-4">Create a new post</h2>
-
-
         {{-- Success Message --}}
         @if (session('success'))
             <div class="mb-2">
@@ -36,6 +34,19 @@
             {{-- Submit Button --}}
             <button class="primary-btn">Create</button>
         </form>
+    </div>
+
+    {{-- User Posts --}}
+    <h2 class="font-bold mb-4">Your Latest Post</h2>
+
+    <div class="grid grid-cols-2 gap-6">
+        @foreach ($posts as $post)
+            <x-postCard :post="$post" /> {{-- Way of passing the non primitive data(object) --}}
+        @endforeach
+    </div>
+
+    <div>
+        {{ $posts->links() }}
     </div>
 
 </x-layout>
