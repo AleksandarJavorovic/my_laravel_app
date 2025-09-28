@@ -36,8 +36,6 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
-        // dd($request);
-
         // Try to Login
         if (Auth::attempt($fields, $request->remember)) {
             // Redirect
