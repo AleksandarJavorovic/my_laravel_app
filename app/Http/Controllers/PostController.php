@@ -29,7 +29,6 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        // dd('ok');
         // Validate
 
         $fields = $request->validate([
@@ -58,7 +57,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('posts.edit', ['post' => $post]);
     }
 
     /**
@@ -66,7 +65,19 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        // Validate
+
+        $fields = $request->validate([
+            'title'   => 'required|max:255',
+            'content' => 'required',
+        ]);
+
+        // Update a post
+
+        $post->update($fields);
+
+        // Redirect
+        return redirect()->route('dashboard')->with('success', 'Post updated successfully!');
     }
 
     /**

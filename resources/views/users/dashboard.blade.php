@@ -37,11 +37,16 @@
     </div>
 
     {{-- User Posts --}}
-    <h2 class="font-bold mb-4">Your Latest Post</h2>
+    <h2 class="font-bold mb-4">Your Latest Posts</h2>
 
     <div class="grid grid-cols-2 gap-6">
         @foreach ($posts as $post)
             <x-postCard :post="$post"> {{-- Way of passing the non primitive data(object) --}}
+
+                {{-- Update a post --}}
+                <a href="{{ route('posts.edit', $post) }}"
+                    class="bg-cyan-500 text-white px-2 py-1 text-xs rounded-md">Update</a>
+
                 {{-- Delete a post --}}
                 <form action="{{ route('posts.destroy', $post) }}" method="POST">
                     @csrf
