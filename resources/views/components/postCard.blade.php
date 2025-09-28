@@ -21,4 +21,8 @@
             <a href="{{ route('posts.show', $post) }}" class="text-blue-500 font-medium">Read more &rarr;</a>
         </div>
     @endif
+
+    <div class="flex items-center justify-end gap-4 mt-6">
+        {{ $slot }}
+    </div>
 </div>
