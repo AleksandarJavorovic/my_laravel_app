@@ -10,7 +10,7 @@
         @endif
 
         {{-- Post Creation Form --}}
-        <form action="{{ route('posts.store') }}" method="POST">
+        <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             {{-- Post Title --}}
             <div class="mb-4">
@@ -27,6 +27,16 @@
                 <label for="content">Post Content</label>
                 <textarea name="content" rows="5" class="input @error('content') !ring-red-500 @enderror">{{ old('content') }}</textarea>
                 @error('content')
+                    <p class="error">{{ $message }}</p>
+                @enderror
+            </div>
+
+            {{-- Post Image --}}
+            <div class="mb-4">
+                <label for="image">Cover Photo</label>
+                <input type="file" name="image" id="image" class="@error('image') !ring-red-500 @enderror">
+
+                @error('image')
                     <p class="error">{{ $message }}</p>
                 @enderror
             </div>

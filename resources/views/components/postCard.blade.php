@@ -1,6 +1,13 @@
 @props(['post', 'full' => false])
 
 <div class="card mb-4">
+
+    {{-- Post Image --}}
+    @if ($post->image)
+        <img src="{{ asset('storage/' . $post->image) }}" alt="Post Image">
+    @else
+        <img src="{{ asset('storage/posts_images/Photo - Aleksandar Javorovic.png') }}" alt="No Image Available">
+    @endif
     {{-- Title --}}
     <h2 class="font-bold text-xl">{{ $post->title }}</h2>
 

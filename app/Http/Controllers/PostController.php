@@ -7,6 +7,7 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller implements HasMiddleware
 {
@@ -40,15 +41,26 @@ class PostController extends Controller implements HasMiddleware
     public function store(Request $request)
     {
         // Validate
-
-        $fields = $request->validate([
-            'title'   => 'required|max:255',
-            'content' => 'required',
+        $request->validate([
+            'title'   => ['required', 'max:255'],
+            'content' => ['required'],
+            'image'   => ['nullable', 'file', 'max:1000', 'mimes:webp,png,jpg'],
         ]);
 
-        // Create a post
+        // Storing the image
+        $path = null;
+        if ($request->hasFile('image')) {
+            $path = Storage::disk('public')->put('posts_images', $request->image);
+        }
 
-        Auth::user()->posts()->create($fields);
+        // Create a post
+        Auth::user()->posts()->create(
+            [
+                'title'   => $request->title,
+                'content' => $request->content,
+                'image'   => $path,
+            ]
+        );
 
         // Redirect
         return back()->with('success', 'Post created successfully!');
