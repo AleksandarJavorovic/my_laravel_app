@@ -1,12 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Mail\WelcomeMail;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller implements HasMiddleware
@@ -54,13 +56,16 @@ class PostController extends Controller implements HasMiddleware
         }
 
         // Create a post
-        Auth::user()->posts()->create(
+        $post = Auth::user()->posts()->create(
             [
                 'title'   => $request->title,
                 'content' => $request->content,
                 'image'   => $path,
             ]
         );
+
+        // Sending a email
+        Mail::to(Auth::user())->send(new WelcomeMail(Auth::user(), $post));
 
         // Redirect
         return back()->with('success', 'Post created successfully!');
