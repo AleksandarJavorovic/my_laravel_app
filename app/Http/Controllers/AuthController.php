@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Events\UserSubscribed;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -26,6 +27,10 @@ class AuthController extends Controller
         Auth::login($user);
 
         event(new Registered($user));
+
+        if ($request->subscribe) {
+            event(new UserSubscribed($user));
+        }
 
         // Redirect
         return redirect()->route('posts.index');

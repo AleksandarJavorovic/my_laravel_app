@@ -40,6 +40,13 @@
                     class="input @error('password') !ring-red-500 @enderror">
             </div>
 
+            {{-- Subscribe Checkbox --}}
+            <div class="mb-4">
+                <input type="checkbox" name="subscribe" id="subscribe" class="inline-block align-middle">
+                <label class="inline-block align-middle" for="subscribe">Subscribe to our
+                    Newsletter</label>
+            </div>
+
             {{-- Submit Button --}}
             <button x-ref="btn" class="btn primary-btn">Register</button>
         </div>
